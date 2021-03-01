@@ -14,12 +14,11 @@ if (process.env.NODE_ENV === 'production') {
    bot = new TelegramBot(token, { polling: true });
 }
 
-// Matches "/word whatever"
-bot.onText(/aaa/, (msg) => {
-  const chatId = msg.chat.id;
-  bot.sendMessage(chatId, "Something")
+bot.on('message', (msg) => {
+ if(msg === 'Cho cho'){
+     bot.sendMessage(chatId, "opa nihua")
+ }
 });
-
 const app = express();
 
 app.use(bodyParser.json());
