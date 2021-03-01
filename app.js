@@ -43,9 +43,12 @@ bot.onText(/\/curse/, (msg, match) => {
 
 bot.on('callback_query', query => {
   const id = query.message.chat.id;
-
-  request('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5', function (error, response, body) {
-    const data = JSON.parse(body);
+axios({
+  method: 'get',
+  url: 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5',
+  responseType: 'json'
+}).then(function (response) {
+const data = JSON.parse(response.data);
     const result = data.filter(item => item.ccy === query.data)[0];
     const flag = {
       'EUR': '🇪🇺',
@@ -59,9 +62,10 @@ bot.on('callback_query', query => {
       Buy: _${result.buy}_
       Sale: _${result.sale}_
     `;
-    bot.sendMessage(id, md, {parse_mode: 'Markdown'});
-  })
+    bot.sendMessage(id, md, {parse_mode: 'Markdown'});  });
+
 })
+
 const app = express();
 
 app.use(bodyParser.json());
