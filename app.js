@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Matches "/word whatever"
-bot.onText(/\/word (.+)/, (msg) => {
+bot.onText(/aaa/, (msg) => {
   const chatId = msg.chat.id;
   bot.sendMessage(chatId, "Something")
 });
