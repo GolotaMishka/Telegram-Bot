@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 bot.on('message', (msg) => {
- if(msg === 'Cho cho'){
+ if(msg.text === 'Cho cho'){
      bot.sendMessage(chatId, "opa nihua")
  }
 });
