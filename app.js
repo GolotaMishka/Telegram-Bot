@@ -1,5 +1,5 @@
 const TelegramBot = require('node-telegram-bot-api');
-const axios = require('axios');
+const request = require('request');
 const express = require('express')
 const bodyParser = require('body-parser');
 require('dotenv').config();
@@ -43,12 +43,9 @@ bot.onText(/\/curse/, (msg, match) => {
 
 bot.on('callback_query', query => {
   const id = query.message.chat.id;
-axios({
-  method: 'get',
-  url: 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5',
-  responseType: 'json'
-}).then(function (response) {
-const data = JSON.parse(response.data);
+
+  request('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5', function (error, response, body) {
+    const data = JSON.parse(body);
     const result = data.filter(item => item.ccy === query.data)[0];
     const flag = {
       'EUR': '🇪🇺',
@@ -62,8 +59,8 @@ const data = JSON.parse(response.data);
       Buy: _${result.buy}_
       Sale: _${result.sale}_
     `;
-    bot.sendMessage(id, md, {parse_mode: 'Markdown'});  });
-
+    bot.sendMessage(id, md, {parse_mode: 'Markdown'});
+  })
 })
 
 const app = express();
