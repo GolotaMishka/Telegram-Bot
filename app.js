@@ -18,7 +18,7 @@ bot.onText(/\/curse/, (msg, match) => {
 
   const chatId = msg.chat.id;
 
-  bot.sendMessage(chatId, 'Выберите какая валюта вас интересует', {
+  bot.sendMessage(chatId, `Выберите какая валюта вас интересует test1 ${process.env.TEST || 'hui'}`, {
     reply_markup: {
       inline_keyboard: [
         [
